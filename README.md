@@ -10,7 +10,7 @@ It uses `ldd` to fetch list of libraries, and `awk`, `tr` and `column` to proces
 
 ## What is planned
 - more complex parameter reading technique
-- option for copying libraries to cwd, but with their absolute paths kept - instead of `$(pwd)/libc.so` it will be `$(pwd)/lib/x86_64-linux-gnu/libc.so` for example
+- option for copying libraries to cwd, but with their absolute paths kept - instead of `./libc.so` it will be `./lib/x86_64-linux-gnu/libc.so` for example
 - option for not copying the most basic libraries as:
   - level 1: libc, pthread... and other libraries from standard library collection
   - level 2: x window system and wayland libraries
