@@ -15,5 +15,5 @@ It uses `ldd` to fetch list of libraries, and `awk`, `tr` and `column` to proces
   - level 1: libc, pthread... and other libraries from standard library collection
   - level 2: x window system and wayland libraries
   - level 3: most known gui libraries - gtk2/3/4, qt...
-  - level 4: codeccs for audio/video/pictures
+  - level 4: codecs for audio/video/pictures
 - option to generate launch script that uses `LD_LIBRARY_PATH` method for `ld-so` dynamic linker to search for libraries in application folder
