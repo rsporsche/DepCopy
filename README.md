@@ -9,6 +9,7 @@ It uses `ldd` to fetch list of libraries, and `awk`, `tr` and `column` to proces
 `./depcopy.sh /bin/bash` < you can put path to any dynamic linked program you want in place of </bin/bash> and the script will copy all dynamic libraries linked to it to your current working directory.
 
 ## What is planned
+- better handling of non path strings from ldd, like: `not found`
 - more complex parameter reading technique
 - option for copying libraries to cwd, but with their absolute paths kept - instead of `./libc.so` it will be `./lib/x86_64-linux-gnu/libc.so` for example
 - option for not copying the most basic libraries as:
