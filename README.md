@@ -9,8 +9,10 @@ It uses `find` to search for binaries, `ldd` to fetch list of libraries, `readel
 ## Usage
 `./depcopy.sh /bin/bash` < you can put path (relative or absolute) to any dynamic linked program you want in place of </bin/bash> and the script will copy all dynamic libraries linked to it to your current working directory.
 or you can run it as `./depcopy.sh --argument`, where `--argument` can be:
+
 `--deps`: print names of programs whose this script is dependent on
 `--help`: print this help file
+
 Anything in place of first entered argument that is not one of those arguments defined in this help file will be processed as pathname.
 
 ## What is planned
