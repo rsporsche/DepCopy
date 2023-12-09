@@ -10,7 +10,9 @@ For GUI apps (X Athena Widgets, Wayland, GTK, Qt, ...), this script won't work o
 It's because version B on target system has some resources open that the version A from source system cannot use, thus rendering such application that uses it unusable with version A when system has version B.
 The partial solution to this is not copying such libraries (not done int he script yet), or removing the ones copied with this script, so the target system can use its own (and it sure has GUI libraries like GTK, Qt, ..., if you are running desktop and got idea to copy it there).
 
-Also, at this stage, the script copies also `glibc`, which MUST'T be copied to target system and should be removed from working directory after the script copied it there. It's because the target system has its own version of `glibc` that is bound to the system, and replacing it with another onje from another system will probably brick the system, thus render it unusable.
+Also, at this stage, the script copies also `glibc`, which MUST'T be copied to target system and should be removed from working directory after the script copied it there. It's because the target system has its own version of `glibc` that is bound to the system, and replacing it with another onje from another system will probably brick the system, thus render it unusable. 
+
+This script is still in work, and after a definitive release it will include such feature to not copy core/GUI libraries - libraries that shouldn't be copied.
 
 It uses: 
 - `ldd` to fetch list of libraries
