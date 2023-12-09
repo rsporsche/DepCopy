@@ -24,5 +24,10 @@ This script can exit either with success (0), or an error code:
 
 ## What is planned
 - status arg that will print versions of various core libraries, like: glibc, x/wayland, gtk/qt...
-- dependency arg upgrade: print also if binaries are found with paths or not
-- option for not copying library and its dependencies (entering filename of .so)
+- when source library is not found, write error message in the end specifying what libraries are missing
+- copy mode argument: 
+	- interactive
+	- replace all
+	- do not copy existing
+- option for not copying library and its dependencies (entering filename of .so, or level)
+- copy symlinks with their source files while keeping absolute path of both
