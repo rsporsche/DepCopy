@@ -4,7 +4,11 @@ Linux dependency copy script
 This simple script allows you to copy all .so libraries linked to a program to your current working directory. This feature is useful when you want to move a program from one distro to another one which has not all dependencies available for it.
 Only one condition must be met: version of `glibc` on target system cannot be lower than the version on source system.
 
-It uses `ldd` to fetch list of libraries, `readelf` to check whether executable is linked dynamically, `awk`/`tr` to process the output from ldd as string, and of course `bash` as interpreter.
+It uses: 
+- `ldd` to fetch list of libraries
+- `readelf` to check whether executable is linked dynamically
+- `awk`/`tr` to process the output from ldd as string
+-  and `bash` of course, as interpreter.
 
 ## Usage
 `./depcopy.sh FILE [OPTIONS]` < you can put path (relative or absolute) to any dynamic linked program you want in place of `FILE` and the script will copy all dynamic libraries linked to it to your current working directory.
