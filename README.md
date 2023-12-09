@@ -4,15 +4,7 @@ Linux dependency copy script
 This simple script allows you to copy all .so libraries linked to a program to your current working directory. This feature is useful when you want to move a program from one distro to another one which has not all dependencies available for it.
 Only conditions that must be met are: 
 - version of `glibc` on target system cannot be lower than the version on source system. Newer versions of `glibc` are backwards compatible with older, but not the other way around.
-- version of GUI libraries as `X Athena Widgets`, `Wayland`, `GTK`, `Qt`, ... on target system cannot be lower than versions on source system. It needs some research whether it does work the other way around. 
-
-For GUI apps (X Athena Widgets, Wayland, GTK, Qt, ...), this script won't work out-of-box at this stage, because of how are GUI libraries bound to system. 
-It's because version B on target system has some resources open that the version A from source system cannot use, thus rendering such application that uses it unusable with version A when system has version B.
-The partial solution to this is not copying such libraries (not done int he script yet), or removing the ones copied with this script, so the target system can use its own (and it sure has GUI libraries like GTK, Qt, ..., if you are running desktop and got idea to copy it there).
-
-Also, at this stage, the script copies also `glibc`, which MUSTN'T be copied to target system and should be removed from working directory after the script copied it there. It's because the target system has its own version of `glibc` that is bound to the system, and replacing it with another onje from another system will probably brick the system, thus render it unusable. 
-
-This script is still in work, and after a definitive release it will include such feature to not copy core/GUI libraries - libraries that shouldn't be copied.
+- version of GUI libraries as `X Athena Widgets`, `Wayland`, `GTK`, `Qt`, ... on target system cannot be lower than versions on source system. It needs some research whether it does always work the other way around. 
 
 It uses: 
 - `ldd` to fetch list of libraries
@@ -35,6 +27,15 @@ This script can exit either with success (0), or an error code:
 - 1 - bad format of arguments
 - 2 - dependency not found
 - 3 - entered executable not found or type mismatch
+
+## Warnings and Additional Info
+For GUI apps (X Athena Widgets, Wayland, GTK, Qt, ...), this script won't work out-of-box at this stage, because of how are GUI libraries bound to system. 
+It's because version B on target system has some resources open that the version A from source system cannot use, thus rendering such application that uses it unusable with version A when system has version B.
+The partial solution to this is not copying such libraries (not done int he script yet), or removing the ones copied with this script, so the target system can use its own (and it sure has GUI libraries like GTK, Qt, ..., if you are running desktop and got idea to copy it there).
+
+Also, at this stage, the script copies also `glibc`, which MUSTN'T be copied to target system and should be removed from working directory after the script copied it there. It's because the target system has its own version of `glibc` that is bound to the system, and replacing it with another onje from another system will probably brick the system, thus render it unusable. 
+
+This script is still in work, and after a definitive release it will include such feature to not copy core/GUI libraries - libraries that shouldn't be copied.
 
 ## What is planned
 - status arg that will print versions of various core libraries, like: glibc, x/wayland, gtk/qt...
