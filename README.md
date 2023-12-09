@@ -2,9 +2,11 @@
 Linux dependency copy script
 
 This simple script allows you to copy all .so libraries linked to a program to your current working directory. This feature is useful when you want to move a program from one distro to another one which has not all dependencies available for it.
-Only one condition must be met: version of `glibc` on target system cannot be lower than the version on source system.
+Only conditions that must be met are: 
+- version of `glibc` on target system cannot be lower than the version on source system. Newer versions of `glibc` are backwards compatible with older, but not the other way around.
+- version of GUI libraries as `X Athena Widgets`, `Wayland`, `GTK`, `Qt`, ... on target system cannot be lower than versions on source system. It needs some research whether it does work the other way around. 
 
-For GUI apps (X Athena Widgets, GTK, Qt, ...), this script won't work out-of-box at this stage, because of how are GUI libraries bound to system. 
+For GUI apps (X Athena Widgets, Wayland, GTK, Qt, ...), this script won't work out-of-box at this stage, because of how are GUI libraries bound to system. 
 It's because version B on target system has some resources open that the version A from source system cannot use, thus rendering such application that uses it unusable with version A when system has version B.
 The partial solution to this is not copying such libraries (not done int he script yet), or removing the ones copied with this script, so the target system can use its own (and it sure has GUI libraries like GTK, Qt, ..., if you are running desktop and got idea to copy it there).
 
