@@ -9,7 +9,11 @@ function view_help(){
 	echo "	--status	print version of various libraries and exit"
 	echo "	--deps		print list of needed programs and exit"
 	echo "	--dependencies	same as --deps"
-	echo "    -b,	--absolute	copy libraries to cwd, but with their absolute path kept"
+	echo "    -b,	copy libraries to cwd, but with their absolute path kept"
+	echo "    -c,	copy mode - action when copying file with existing filename"
+	echo "		a - ask"
+	echo "		o - overwrite"
+	echo "		n - no-overwrite"
 	echo ""
 	echo "Binary for copying dependency libraries must be entered as first argument,"
 	echo "otherwise the script won't recognize it as pathname."
@@ -57,6 +61,8 @@ function view_dependencies(){
 DEPENDENCIES=("readelf" "ldd" "find" "awk" "tr") # array of needed binaries for this script
 ABSOLUTE_AS_RELATIVE=0 # whether keep binaries of libraries in their ablosute paths from /, but in current working dir (like ./lib/glibc.so, instead of ./glibc.so)
 EXECUTABLE_BINARY=""
+COPY_MODE="--interactive"
+SYMLINK_FOLLOW_MODE="--dereference"
 ############################
 
 
@@ -79,10 +85,11 @@ if [[ $1 != "-"* ]]; then
 fi
 
 # check short arguments, and then set control variables, or call helper functions
-while getopts ":bh-:" optchar; do
+while getopts ":bhc:-:" optchar; do
 	case ${optchar} in
 		b)
 			ABSOLUTE_AS_RELATIVE=1
+			SYMLINK_FOLLOW_MODE="--copy-contents"
 			;;
 		h)
 			view_help
@@ -109,6 +116,20 @@ while getopts ":bh-:" optchar; do
 				*)
 					echo "Unknown argument \"--${OPTARG}\", run $0 --help for usage." 1>&2
 					exit 1
+					;;
+			esac
+			;;
+			
+		c)
+			case ${OPTARG} in
+				a)
+					COPY_MODE="--interactive"
+					;;
+				o)
+					COPY_MODE="--force"
+					;;
+				n)
+					COPY_MODE="--no-clobber"
 					;;
 			esac
 			;;
@@ -174,16 +195,36 @@ read -a DEP_PATHS <<< $(ldd $EXECUTABLE_BINARY | awk '/=>/ {print $3}' | tr '\n'
 
 # now list through list of libraries and copy them to current working directory
 DIRECTORIES="/"
+ERROR="0"
 for I in ${DEP_PATHS[@]}
 do
 	if test "$ABSOLUTE_AS_RELATIVE" == 1; then
 		DIRECTORIES=$(awk -F'/' '{for(i=1; i<NF; i++){printf "%s/", $i}}' <<< $I)
 		mkdir -p ".$DIRECTORIES";
+		if test "$?" != "0"; then
+			echo "Directory creation failed with error," >&2
+			echo "ensure that you have proper permissions to write in this folder." >&2
+			exit 4
+		fi
 	fi
 	echo "copying: $I to .$(pwd)$DIRECTORIES"
-	cp "$I" ".$DIRECTORIES"
+	if test "$?" != "0"; then
+		ERROR="1"
+	fi
+	cp "$I" ".$DIRECTORIES" "$COPY_MODE"
 done
 unset $DIRECTORIES
+unset $ERROR
+
+if test "$ERROR" == "0"; then
+	echo "All linked libraries copied successfully."
+else
+	echo "Not all libraries were successfully copied."
+	echo "Review errors above if any and/or check if all libraries"
+	echo "needed for the program were copied."
+fi
+echo "Keep in mind that this script copies only dynamic libraries this app is dependent on."
+echo "You may need to copy other application files - depending on your use case."
 ###############
 
 
@@ -195,4 +236,6 @@ unset $DIRECTORIES
 unset $EXECUTABLE_BINARY
 unset $DEPENDENCIES
 unset $ABLOSUTE_AS_RELATIVE
+unset $COPY_MODE
+unset $SYMLINK_FOLLOW_MODE
 ########################
