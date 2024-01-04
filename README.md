@@ -18,7 +18,8 @@ It uses:
 It supports these arguments:
 - `-h`|`--help`: print the help file
 - `--deps`|`--dependencies`: print names of programs whose this script is dependent on and try to locate them (prints either absolute path, or `not found` string, so they can be easily tracked)
-- `-b`|`--absolute`: copy libraries to current working directory, but keep their absolute paths (useful for easy copying on target system)
+- `-b`: copy libraries to current working directory, but keep their absolute paths (useful for easy copying on target system)
+- `-c`: copy mode - what happens when the script tries to copy file with name that already exists in the destination folder, supoorts values `a` - ask, `o` - overwrite, and `n` - no-overwrite.
 
 Executable file must be entered as first argument, otherwise the script won't recognize it as pathname. It can be both relative, or absolute path.
 For arguments that it makes sense to be used without file arg (like `--help`, `--deps`, ...), FILE doesn't have to be entered and instead such arg as `--help` can be entered as first.
@@ -40,9 +41,5 @@ This script is still in work, and after a definitive release it will include suc
 ## What is planned
 - status arg that will print versions of various core libraries, like: glibc, x/wayland, gtk/qt...
 - when source library is not found, write error message in the end specifying what libraries are missing
-- copy mode argument: 
-	- interactive
-	- replace all
-	- do not copy existing
 - option for not copying library and its dependencies (entering filename of .so, or level)
 - copy symlinks with their source files while keeping absolute path of both
