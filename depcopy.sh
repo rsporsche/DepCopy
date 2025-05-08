@@ -235,7 +235,7 @@ echo "You may need to copy other application files - depending on your use case.
 ########################
 unset $EXECUTABLE_BINARY
 unset $DEPENDENCIES
-unset $ABLOSUTE_AS_RELATIVE
+unset $ABSOLUTE_AS_RELATIVE
 unset $COPY_MODE
 unset $SYMLINK_FOLLOW_MODE
 ########################
