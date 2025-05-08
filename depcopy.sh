@@ -233,9 +233,9 @@ echo "You may need to copy other application files - depending on your use case.
 ########################
 # CLEAN UP BEFORE EXIT #
 ########################
-unset $EXECUTABLE_BINARY
-unset $DEPENDENCIES
-unset $ABSOLUTE_AS_RELATIVE
-unset $COPY_MODE
-unset $SYMLINK_FOLLOW_MODE
+unset EXECUTABLE_BINARY
+unset DEPENDENCIES
+unset ABSOLUTE_AS_RELATIVE
+unset COPY_MODE
+unset SYMLINK_FOLLOW_MODE
 ########################
